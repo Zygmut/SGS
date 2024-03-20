@@ -1,0 +1,23 @@
+version: "3.3"
+
+services:
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      # move local prometheus configuration into the docker container
+      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+
+  grafana:
+    hostname: grafana
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
